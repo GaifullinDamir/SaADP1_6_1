@@ -10,21 +10,19 @@ void search(Vertex* pRoot, Vertex*& pCurrent, int currentKey, bool check)
 	{
 		if (currentKey < pCurrent->key) { pCurrent = pCurrent->left; return; }
 		else if (currentKey < pCurrent->key) { pCurrent = pCurrent->right; return; }
-		pCurrent = nullptr; check = false; break;
+		pCurrent = nullptr; 
+		check = false; break;
 	}
 }
 
 int randomCount() { return MinNumber + rand() % (MaxNumber - MinNumber + 1); }
 
-void add(Vertex* pCurrent, int key)
+void add(Vertex*& pCurrent, int key)
 {
 	if (pCurrent == nullptr)
 	{
-		pCurrent = new Vertex;
-		pCurrent->key = key;
-		pCurrent->left = pCurrent->right = nullptr;
-		pCurrent->numbOfIdentical = 1;
-		return;
+		pCurrent = new Vertex; pCurrent->key = key; pCurrent->left = pCurrent->right = nullptr;
+		pCurrent->numbOfIdentical = 1; return;
 	}
 	else if (key < pCurrent->key) { add(pCurrent->left, key); return; }
 	else if (key > pCurrent->key) { add(pCurrent->right, key); return; }
@@ -36,36 +34,34 @@ void addNonRecursive(Vertex* pCurrent, int key)
 	if (pCurrent == nullptr)
 	{
 		pCurrent = new Vertex; pCurrent->left = pCurrent->right = nullptr;
-		pCurrent->key = key; pCurrent->numbOfIdentical = 1;
-		return;
+		pCurrent->key = key; pCurrent->numbOfIdentical = 1; return;
 	}
-	Vertex* pParent;
+	Vertex* pParent = nullptr;
 	while (pCurrent != nullptr)
 	{
 		pParent = pCurrent;
 		if (key < pCurrent->key) { pCurrent = pCurrent->left; return; }
 		else if (key > pCurrent->key) { pCurrent = pCurrent->right; return; }
-		pCurrent->numbOfIdentical++; pCurrent = nullptr;
+		pCurrent->numbOfIdentical++;
+		pCurrent = nullptr;
 	}
 	if (key < pParent->key)
 	{
 		pCurrent = new Vertex; pCurrent->left = pCurrent->right = nullptr; pCurrent->key = key;
-		pParent->left = pCurrent;
-		return;
+		pParent->left = pCurrent; return;
 	}
 	else if (key < pParent->key)
 	{
 		pCurrent = new Vertex; pCurrent->left = pCurrent->right = nullptr; pCurrent->key = key;
-		pParent->right = pCurrent;
-		return;
+		pParent->right = pCurrent; return;
 	}
 }
 
-void deleteVertex(Vertex* pCurrent, int key)
+void deleteVertex(Vertex*& pCurrent, int key)
 {
 	Vertex* pTemporary;
-	if (pCurrent == nullptr) { cout << "   There is no such vertex.\n"; return; }
-	else if (key < pCurrent->key) { deleteVertex(pCurrent->left, key); return; }
+	if (pCurrent == nullptr) { cout << "   There is no such vertex.\n"; return;}
+	else if (key < pCurrent->key) { deleteVertex(pCurrent->left, key); return;}
 	else if (key > pCurrent->key) { deleteVertex(pCurrent->right, key); return; }
 	pTemporary = pCurrent;
 	if (pTemporary->right == nullptr) { pCurrent = pTemporary->left; return; }
@@ -74,7 +70,7 @@ void deleteVertex(Vertex* pCurrent, int key)
 	delete pTemporary; pTemporary = nullptr;
 }
 
-void change(Vertex* pSurrogate, Vertex*& pTemporary)
+void change(Vertex*& pSurrogate, Vertex*& pTemporary)
 {
 	if (pSurrogate->right != nullptr) { change(pSurrogate->right, pTemporary); return; }
 	pTemporary->key = pSurrogate->key;
@@ -84,12 +80,14 @@ void change(Vertex* pSurrogate, Vertex*& pTemporary)
 
 void showBackSymmetric(Vertex* pCurrent, int level)
 {
-	if (pCurrent == nullptr) { cout << "   Nothing to show.\n"; return; }
-	level++;
-	showBackSymmetric(pCurrent->right, level);
-	for (int i = 0; i < level - 1; i++) { cout << "   "; }
-	cout << pCurrent->key << endl;
-	showBackSymmetric(pCurrent->left, level);
+	if (pCurrent != nullptr)
+	{
+		level++;
+		showBackSymmetric(pCurrent->right, level);
+		for (int i = 0; i < level - 1; i++) { cout << "   "; }
+		cout << pCurrent->key << endl;
+		showBackSymmetric(pCurrent->left, level);
+	}
 }
 
 void showInLine(Vertex* pCurrent)

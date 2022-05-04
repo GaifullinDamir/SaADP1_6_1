@@ -4,9 +4,7 @@
 enum userInterface
 {
 	ShowMenu, Create, Add, Search, ShowBack, ShowInLine, Delete, Exit,
-	BaseLevel = 1,
-	Left = 1, Right = 2,
-	Continue = 1
+	BaseLevel = 1
 };
 
 void printMenu();

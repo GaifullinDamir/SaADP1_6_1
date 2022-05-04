@@ -54,8 +54,8 @@ void interface(Vertex*& pRoot)
 
 void caseCreate(Vertex*& pRoot)
 {
-	cout << "   Number of vertexes: "; 
-	for (int i = 0; i < input(); i++) { add(pRoot, randomCount()); }
+	cout << "   Number of vertexes: "; int numbOfVertex = input();
+	for (int i = 0; i < numbOfVertex; i++) { add(pRoot, randomCount()); }
 }
 
 void caseAdd(Vertex*& pRoot)
@@ -75,6 +75,7 @@ void caseSearch(Vertex* pRoot)
 
 void caseShowBack(Vertex* pRoot)
 {
+	if (pRoot == nullptr) { cout << "   Nothing to show.\n"; return; }
 	cout << "_________________________\n";
 	showBackSymmetric(pRoot, BaseLevel);
 	cout << "_________________________\n";
@@ -82,6 +83,7 @@ void caseShowBack(Vertex* pRoot)
 
 void caseShowInLine(Vertex* pRoot)
 {
+	if (pRoot == nullptr) { cout << "   Nothing to show.\n"; return; }
 	cout << "_________________________\n";
 	showInLine(pRoot);
 	cout << "_________________________\n";

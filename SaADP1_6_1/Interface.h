@@ -15,4 +15,14 @@ int input();
 
 void interface(Vertex*& pRoot);
 
+void caseCreate(Vertex*& pRoot);
+
 void caseAdd(Vertex*& pRoot);
+
+void caseSearch(Vertex* pRoot);
+
+void caseShowBack(Vertex* pRoot);
+
+void caseShowInLine(Vertex* pRoot);
+
+void caseDelete(Vertex*& pRoot);

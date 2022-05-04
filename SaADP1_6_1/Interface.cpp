@@ -43,7 +43,7 @@ void interface(Vertex*& pRoot)
 		case Add:        { caseAdd(pRoot); break; }
 		case Search:     { caseSearch(pRoot); break; }
 		case ShowBack:   { caseShowBack(pRoot); break; }
-		case ShowInLine: { caseShowInLine; break; }
+		case ShowInLine: { caseShowInLine(pRoot); break; }
 		case Delete:     { caseDelete(pRoot); break;}
 		case Exit:       { stop = true; break; }
 		default:         std::cout << "   There is no such menu item.\n\n"; break;
@@ -83,7 +83,7 @@ void caseShowBack(Vertex* pRoot)
 void caseShowInLine(Vertex* pRoot)
 {
 	cout << "_________________________\n";
-	caseShowInLine(pRoot);
+	showInLine(pRoot);
 	cout << "_________________________\n";
 }
 

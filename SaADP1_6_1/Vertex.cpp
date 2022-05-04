@@ -5,7 +5,6 @@ using namespace std;
 
 void search(Vertex* pRoot, Vertex*& pCurrent, int currentKey, bool check)
 {
-	Vertex* pCurrent = pRoot;
 	check = true;
 	while (pCurrent != nullptr && check)
 	{
@@ -93,13 +92,13 @@ void showBackSymmetric(Vertex* pCurrent, int level)
 	showBackSymmetric(pCurrent->left, level);
 }
 
-void showInString(Vertex* pCurrent)
+void showInLine(Vertex* pCurrent)
 {
 	if (pCurrent != nullptr)
 	{
-		showInString(pCurrent->left);
+		showInLine(pCurrent->left);
 		cout << pCurrent->key << "(" << pCurrent->numbOfIdentical << ")  ";
-		showInString(pCurrent->right);
+		showInLine(pCurrent->right);
 	}
 }
 

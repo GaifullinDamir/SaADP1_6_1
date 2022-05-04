@@ -21,6 +21,6 @@ void change(Vertex* pSurrogate, Vertex*& pTemporary);
 
 void showBackSymmetric(Vertex* pCurrent, int level);
 
-void showInString(Vertex* pCurrent);
+void showInLine(Vertex* pCurrent);
 
 void clearMemory(Vertex*& pCurrent);

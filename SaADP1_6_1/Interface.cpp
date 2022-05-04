@@ -8,12 +8,13 @@ void printMenu()
 {
 	cout << endl;
 	cout
-		<< "\n1. Adding a number of vertex."
-		<< "\n2. Forward tree output."
-		<< "\n3. Symmetrical tree output."
+		<< "\n1. Add number of vertex in tree."
+		<< "\n2. Add vertex."
+		<< "\n3. Search vertex."
 		<< "\n4. Inversely symmetrical tree output."
-		<< "\n5. Delete tree."
-		<< "\n6. Exit."
+		<< "\n5. Tree output in line."
+		<< "\n6. Delete a vertex."
+		<< "\n7. Exit."
 		<< endl;
 }
 
@@ -38,46 +39,10 @@ void interface(Vertex*& pRoot)
 		switch (input())
 		{
 		case ShowMenu: { printMenu(); break; }
-		case Add: { caseAdd(pRoot); break; }
-		case ShowForward:
-		{
-			if (!treeIsEmpty(pRoot))
-			{
-				cout << "_________________________" << endl;
-				showForward(pRoot, BaseLevel);
-				cout << "_________________________" << endl;
-			}
-			else cout << "   Nothing to show." << endl;
-			break;
-		}
-		case ShowSymmetric:
-		{
-			if (!treeIsEmpty(pRoot))
-			{
-				cout << "_________________________" << endl;
-				showSymmetric(pRoot, BaseLevel);
-				cout << "_________________________" << endl;
-			}
-			else cout << "   Nothing to show." << endl;
-			break;
-		}
-		case ShowBack:
-		{
-			if (!treeIsEmpty(pRoot))
-			{
-				cout << "_________________________" << endl;
-				showBackSymmetric(pRoot, BaseLevel);
-				cout << "_________________________" << endl;
-			}
-			else cout << "   Nothing to show." << endl;
-			break;
-		}
-		case Delete:
-		{
-			if (!treeIsEmpty(pRoot)) { treeClearMemory(pRoot); cout << "   Complete." << endl; }
-			else cout << "   Nothing to delete." << endl;
-			break;
-		}
+		case Create: { caseCreate(pRoot); break; }
+		case Add: { cout << "   Enter data to add (number):"; addNonRecursive(pRoot, input()); break; }
+		case Search: {caseSearch(pRoot); break; }
+		case ShowBack: {}
 		case Exit: { stop = true; break; }
 		default:
 			std::cout << "   There is no such menu item." << std::endl; std::cout << std::endl; break;
@@ -86,30 +51,29 @@ void interface(Vertex*& pRoot)
 	}
 }
 
-void caseAdd(Vertex*& pRoot)
+void caseCreate(Vertex*& pRoot)
 {
-	Vertex* pCurrent = pRoot;
-	Vertex* pSearched;
-	if (treeIsEmpty(pRoot))
+	cout << "   Number of vertexes: "; 
+	for (int i = 0; i < input(); i++) { add(pRoot, randomCount()); }
+}
+
+void caseSearch(Vertex* pRoot)
+{
+	Vertex* pCurrent;
+	cout << "   Enter a vertex for search: ";
+	bool check = false; search(pRoot, pCurrent, input(), check);
+	if (check) { cout << "   Vertex: " << pCurrent->key << "(" << pCurrent->numbOfIdentical << ")\n"; return; }
+	cout << "   There is no such vertex.\n";
+}
+void caseShow(Vertex* pRoot)
+{
+	if (pRoot != nullptr)
 	{
-		cout << "   Enter data to add: "; int data = input();
-		add(pRoot, pSearched, data);
+		cout << "_________________________" << endl;
+		showBackSymmetric(pRoot, BaseLevel);
+		cout << "_________________________" << endl;
+		return;
 	}
-	else
-	{
-		bool check = false;
-		cout << "   Enter data to search: ";
-		int searchedData = input();
-		searchVertex(pCurrent, pSearched, searchedData, check);
-		if (check)
-		{
-			if (pSearched->left != nullptr && pSearched->right != nullptr) { cout << "   The vertex is full." << endl; }
-			else
-			{
-				cout << "   Enter data to add: "; int data = input();
-				add(pRoot, pSearched, data);
-			}
-		}
-		else cout << "   No such vertex." << endl;
-	}
+	cout << "   Nothing to show.\n";
+	
 }

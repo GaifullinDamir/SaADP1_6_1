@@ -13,13 +13,15 @@ enum vertex
 
 void treeInit(Vertex*& pRoot);
 
-bool treeIsEmpty(Vertex* pRoot);
-
 void search(Vertex* pRoot, Vertex*& pCurrent, int currentKey, bool check);
 
-int randomCount(int minNumber, int maxNumber);
+int randomCount();
 
 void add(Vertex* pCurrent, int key);
+
+void addNonRecursive(Vertex* pCurrent, int key);
+
+void addNumbOfVertex(Vertex* pCurrent, int choice, int numbOfVertex);
 
 void deleteVertex(Vertex* pCurrent, int key);
 
@@ -30,5 +32,3 @@ void showBackSymmetric(Vertex* pCurrent, int level);
 void showInString(Vertex* pCurrent);
 
 void treeClearMemory(Vertex*& pCurrent);
-
-

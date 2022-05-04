@@ -1,7 +1,6 @@
 #include <iostream>
 #include "Vertex.h"
 using namespace std;
-int gCounter = 0;
 void treeInit(Vertex*& pRoot) { pRoot = nullptr; }
 
 bool treeIsEmpty(Vertex* pRoot) { return pRoot == nullptr; }
@@ -14,23 +13,68 @@ void search(Vertex* pRoot, Vertex*& pCurrent, int currentKey, bool check)
 	{
 		if (currentKey < pCurrent->key) { pCurrent = pCurrent->left; }
 		else if (currentKey < pCurrent->key) { pCurrent = pCurrent->right; }
-		else pCurrent = nullptr; check = false; gCounter++; break;
+		else pCurrent = nullptr; check = false; break;
 	}
 }
 
-void addVertex(Vertex* pCurrent, int key)
+int randomCount() { return MinNumber + rand() % (MaxNumber - MinNumber + 1); }
+
+void add(Vertex* pCurrent, int key)
 {
 	if (treeIsEmpty(pCurrent))
 	{
 		pCurrent = new Vertex;
 		pCurrent->key = key;
 		pCurrent->left = pCurrent->right = nullptr;
-		pCurrent->numbOfVertex = gCounter = 1;
+		pCurrent->numbOfIdentical = 1;
 		return;
 	}
-	else if (key < pCurrent->key) { addVertex(pCurrent->left, key); return; }
-	else if (key > pCurrent->key) { addVertex(pCurrent->right, key); return; }
-	pCurrent->numbOfVertex++; gCounter++;
+	else if (key < pCurrent->key) { add(pCurrent->left, key); return; }
+	else if (key > pCurrent->key) { add(pCurrent->right, key); return; }
+	pCurrent->numbOfIdentical++;
+}
+
+void addNonRecursive(Vertex* pRoot, Vertex* pCurrent, int key)
+{
+	if (treeIsEmpty(pRoot))
+	{
+		pRoot = new Vertex; pRoot->left = pRoot->right = nullptr;
+		pRoot->key = key; pRoot->numbOfIdentical = 1;
+		return;
+	}
+	Vertex* pParent;
+	pCurrent = pRoot;
+	while (pCurrent != nullptr)
+	{
+		pParent = pCurrent;
+		if (key < pCurrent->key) { pCurrent = pCurrent->left; return; }
+		else if (key > pCurrent->key) { pCurrent = pCurrent->right; return; }
+		pCurrent->numbOfIdentical++; pCurrent = nullptr;
+	}
+	if (key < pParent->key)
+	{
+		pCurrent = new Vertex; pCurrent->left = pCurrent->right = nullptr; pCurrent->key = key;
+		pParent->left = pCurrent;
+		return;
+	}
+	else if (key < pParent->key)
+	{
+		pCurrent = new Vertex; pCurrent->left = pCurrent->right = nullptr; pCurrent->key = key;
+		pParent->right = pCurrent;
+		return;
+	}
+}
+
+void addNumbOfVertex(Vertex* pRoot, Vertex* pCurrent, int choice, int numbOfVertex)
+{
+	switch (choice)
+	{
+	case Symmetric: for (int i = 0; i < numbOfVertex; i++) { add(pCurrent, randomCount()); }
+	case NonSymmetric: for (int i = 0; i < numbOfVertex; i++) { addNonRecursive(pRoot, pCurrent, randomCount()); }
+	default:
+		cout << "   There is no such menu item.\n";
+		break;
+	}
 }
 
 void deleteVertex(Vertex* pCurrent, int key)
@@ -71,12 +115,18 @@ void showInString(Vertex* pCurrent)
 	if (pCurrent != nullptr)
 	{
 		showInString(pCurrent->left);
-		cout << pCurrent->key << "(" << pCurrent->numbOfVertex << ")  ";
+		cout << pCurrent->key << "(" << pCurrent->numbOfIdentical << ")  ";
 		showInString(pCurrent->right);
 	}
 }
 
-void searcTheSame(Vertex*& pCurrent, int key)
+void treeClearMemory(Vertex*& pCurrent)
 {
-
+	if (pCurrent != nullptr)
+	{
+		treeClearMemory(pCurrent->left);
+		treeClearMemory(pCurrent->right);
+		delete pCurrent;
+		pCurrent = nullptr;
+	}
 }

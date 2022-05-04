@@ -2,6 +2,7 @@
 #include <string>
 #include "Interface.h"
 #include "Vertex.h"
+
 using namespace std;
 
 void printMenu()
@@ -24,30 +25,30 @@ int input()
 	while (check)
 	{
 		try { cin >> optionInput; option = stoi(optionInput); check = false; }
-		catch (const std::exception&) { cout << "   Wrong input." << endl; cout << endl; check = true; }
+		catch (const std::exception&) { cout << "   Wrong input.\n\n"; check = true; }
 	}
 	return option;
 }
 
 void interface(Vertex*& pRoot)
 {
-	bool stop = false;
-	printMenu();
+	bool stop = false; printMenu();
 	while (!stop)
 	{
 		cout << "   Choice: ";
 		switch (input())
 		{
-		case ShowMenu: { printMenu(); break; }
-		case Create: { caseCreate(pRoot); break; }
-		case Add: { cout << "   Enter data to add (number):"; addNonRecursive(pRoot, input()); break; }
-		case Search: {caseSearch(pRoot); break; }
-		case ShowBack: {}
-		case Exit: { stop = true; break; }
-		default:
-			std::cout << "   There is no such menu item." << std::endl; std::cout << std::endl; break;
+		case ShowMenu:   { printMenu(); break; }
+		case Create:     { caseCreate(pRoot); break; }
+		case Add:        { caseAdd(pRoot); break; }
+		case Search:     { caseSearch(pRoot); break; }
+		case ShowBack:   { caseShowBack(pRoot); break; }
+		case ShowInLine: { caseShowInLine; break; }
+		case Delete:     { caseDelete(pRoot); break;}
+		case Exit:       { stop = true; break; }
+		default:         std::cout << "   There is no such menu item.\n\n"; break;
 		}
-		std::cout << "   (0) - show menu." << std::endl;
+		cout << "   (0) - show menu.\n";
 	}
 }
 
@@ -55,6 +56,12 @@ void caseCreate(Vertex*& pRoot)
 {
 	cout << "   Number of vertexes: "; 
 	for (int i = 0; i < input(); i++) { add(pRoot, randomCount()); }
+}
+
+void caseAdd(Vertex*& pRoot)
+{
+	cout << "   Enter data to add (number):";
+	addNonRecursive(pRoot, input());
 }
 
 void caseSearch(Vertex* pRoot)
@@ -65,15 +72,23 @@ void caseSearch(Vertex* pRoot)
 	if (check) { cout << "   Vertex: " << pCurrent->key << "(" << pCurrent->numbOfIdentical << ")\n"; return; }
 	cout << "   There is no such vertex.\n";
 }
-void caseShow(Vertex* pRoot)
+
+void caseShowBack(Vertex* pRoot)
 {
-	if (pRoot != nullptr)
-	{
-		cout << "_________________________" << endl;
-		showBackSymmetric(pRoot, BaseLevel);
-		cout << "_________________________" << endl;
-		return;
-	}
-	cout << "   Nothing to show.\n";
-	
+	cout << "_________________________\n";
+	showBackSymmetric(pRoot, BaseLevel);
+	cout << "_________________________\n";
+}
+
+void caseShowInLine(Vertex* pRoot)
+{
+	cout << "_________________________\n";
+	caseShowInLine(pRoot);
+	cout << "_________________________\n";
+}
+
+void caseDelete(Vertex*& pRoot)
+{
+	cout << "   Enter a vertex for delete: ";
+	deleteVertex(pRoot, input());
 }

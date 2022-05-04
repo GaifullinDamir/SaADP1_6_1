@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Vertex.h"
+
 using namespace std;
-void treeInit(Vertex*& pRoot) { pRoot = nullptr; }
 
 void search(Vertex* pRoot, Vertex*& pCurrent, int currentKey, bool check)
 {
@@ -65,7 +65,7 @@ void addNonRecursive(Vertex* pCurrent, int key)
 void deleteVertex(Vertex* pCurrent, int key)
 {
 	Vertex* pTemporary;
-	if (pCurrent == nullptr) { cout << "   Nothing to delete.\n"; return; }
+	if (pCurrent == nullptr) { cout << "   There is no such vertex.\n"; return; }
 	else if (key < pCurrent->key) { deleteVertex(pCurrent->left, key); return; }
 	else if (key > pCurrent->key) { deleteVertex(pCurrent->right, key); return; }
 	pTemporary = pCurrent;
@@ -85,14 +85,12 @@ void change(Vertex* pSurrogate, Vertex*& pTemporary)
 
 void showBackSymmetric(Vertex* pCurrent, int level)
 {
-	if (pCurrent != nullptr)
-	{
-		level++;
-		showBackSymmetric(pCurrent->right, level);
-		for (int i = 0; i < level - 1; i++) { cout << "   "; }
-		cout << pCurrent->key << endl;
-		showBackSymmetric(pCurrent->left, level);
-	}
+	if (pCurrent == nullptr) { cout << "   Nothing to show.\n"; return; }
+	level++;
+	showBackSymmetric(pCurrent->right, level);
+	for (int i = 0; i < level - 1; i++) { cout << "   "; }
+	cout << pCurrent->key << endl;
+	showBackSymmetric(pCurrent->left, level);
 }
 
 void showInString(Vertex* pCurrent)
@@ -105,12 +103,12 @@ void showInString(Vertex* pCurrent)
 	}
 }
 
-void treeClearMemory(Vertex*& pCurrent)
+void clearMemory(Vertex*& pCurrent)
 {
 	if (pCurrent != nullptr)
 	{
-		treeClearMemory(pCurrent->left);
-		treeClearMemory(pCurrent->right);
+		clearMemory(pCurrent->left);
+		clearMemory(pCurrent->right);
 		delete pCurrent;
 		pCurrent = nullptr;
 	}

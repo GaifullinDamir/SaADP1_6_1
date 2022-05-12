@@ -13,7 +13,7 @@ int randomCount();
 
 void add(Vertex*& pCurrent, int key);
 
-void addNonRecursive(Vertex* pCurrent, int key);
+void addNonRecursive(Vertex*& pCurrent, int key);
 
 void deleteVertex(Vertex*& pCurrent, int key);
 

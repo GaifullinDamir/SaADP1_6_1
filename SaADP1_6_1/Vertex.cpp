@@ -29,7 +29,7 @@ void add(Vertex*& pCurrent, int key)
 	pCurrent->numbOfIdentical++;
 }
 
-void addNonRecursive(Vertex* pCurrent, int key)
+void addNonRecursive(Vertex*& pCurrent, int key)
 {
 	if (pCurrent == nullptr)
 	{

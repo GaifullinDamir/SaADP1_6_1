@@ -5,9 +5,9 @@ struct Vertex
 	Vertex* left, * right;
 };
 
-enum vertex { MinNumber = 1, MaxNumber = 15 };
+enum vertex { MinNumber = 1, MaxNumber = 150 };
 
-void search(Vertex* pRoot, Vertex*& pCurrent, int currentKey, bool check);
+void search(Vertex* pRoot, Vertex*& pCurrent, int currentKey, bool& check);
 
 int randomCount();
 

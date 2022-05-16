@@ -3,15 +3,24 @@
 
 using namespace std;
 
-void search(Vertex* pRoot, Vertex*& pCurrent, int currentKey, bool check)
+void search(Vertex* pRoot, Vertex*& pCurrent, int currentKey, bool& check)
 {
-	check = true;
-	while (pCurrent != nullptr && check)
+	pCurrent = pRoot;
+	check = false;
+	while (pCurrent != nullptr && !check)
 	{
-		if (currentKey < pCurrent->key) { pCurrent = pCurrent->left; return; }
-		else if (currentKey < pCurrent->key) { pCurrent = pCurrent->right; return; }
-		pCurrent = nullptr; 
-		check = false; break;
+		if (currentKey < pCurrent->key) 
+		{ 
+			pCurrent = pCurrent->left;
+		}
+		else if (currentKey > pCurrent->key) 
+		{ 
+			pCurrent = pCurrent->right;
+		}
+		else if (pCurrent->key == currentKey)
+		{
+			check = true;
+		}
 	}
 }
 

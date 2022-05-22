@@ -17,6 +17,8 @@ void caseCreate(Vertex*& pRoot);
 
 void caseAdd(Vertex*& pRoot);
 
+void caseAddRecursive(Vertex*& pRoot);
+
 void caseSearch(Vertex* pRoot);
 
 void caseShowBack(Vertex* pRoot);

@@ -54,12 +54,14 @@ void interface(Vertex*& pRoot)
 
 void caseCreate(Vertex*& pRoot)
 {
+	Vertex* pCurrent;
 	cout << "   Number of vertexes: "; int numbOfVertex = input();
 	for (int i = 0; i < numbOfVertex; i++) { add(pRoot, randomCount()); }
 }
 
 void caseAdd(Vertex*& pRoot)
 {
+	Vertex* pCurrent;
 	cout << "   Enter data to add (number):";
 	addNonRecursive(pRoot, input());
 }

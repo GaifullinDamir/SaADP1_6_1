@@ -33,33 +33,47 @@ void add(Vertex*& pCurrent, int key)
 		pCurrent = new Vertex; pCurrent->key = key; pCurrent->left = pCurrent->right = nullptr;
 		pCurrent->numbOfIdentical = 1; return;
 	}
-	else if (key < pCurrent->key) { add(pCurrent->left, key); return; }
-	else if (key > pCurrent->key) { add(pCurrent->right, key); return; }
-	pCurrent->numbOfIdentical++;
+	else if (key < pCurrent->key) { add(pCurrent->left, key); }
+	else if (key > pCurrent->key) { add(pCurrent->right, key); }
+	else
+	{
+		pCurrent->numbOfIdentical++;
+	}
+	
 }
 
-void addNonRecursive(Vertex*& pCurrent, int key)
+void addNonRecursive(Vertex*& pRoot, int key)
 {
-	if (pCurrent == nullptr)
+	if (pRoot == nullptr)
 	{
-		pCurrent = new Vertex; pCurrent->left = pCurrent->right = nullptr;
-		pCurrent->key = key; pCurrent->numbOfIdentical = 1; return;
+		pRoot = new Vertex; pRoot->left = pRoot->right = nullptr;
+		pRoot->key = key; pRoot->numbOfIdentical = 1; return;
 	}
+	Vertex* pCurrent = pRoot;
 	Vertex* pParent = nullptr;
 	while (pCurrent != nullptr)
 	{
 		pParent = pCurrent;
-		if (key < pCurrent->key) { pCurrent = pCurrent->left; return; }
-		else if (key > pCurrent->key) { pCurrent = pCurrent->right; return; }
-		pCurrent->numbOfIdentical++;
-		pCurrent = nullptr;
+		if (key < pCurrent->key) 
+		{ 
+			pCurrent = pCurrent->left;
+		}
+		else if (key > pCurrent->key) 
+		{
+			pCurrent = pCurrent->right;
+		}
+		else
+		{
+			pCurrent->numbOfIdentical++;
+			pCurrent = nullptr;
+		}
 	}
 	if (key < pParent->key)
 	{
 		pCurrent = new Vertex; pCurrent->left = pCurrent->right = nullptr; pCurrent->key = key;
 		pParent->left = pCurrent; return;
 	}
-	else if (key < pParent->key)
+	else if (key > pParent->key)
 	{
 		pCurrent = new Vertex; pCurrent->left = pCurrent->right = nullptr; pCurrent->key = key;
 		pParent->right = pCurrent; return;

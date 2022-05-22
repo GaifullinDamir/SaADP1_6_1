@@ -3,7 +3,7 @@
 
 enum userInterface
 {
-	ShowMenu, Create, Add, Search, ShowBack, ShowInLine, Delete, Exit,
+	ShowMenu, Create, Add, AddRecursive, Search, ShowBack, ShowInLine, Delete, Exit,
 	BaseLevel = 1
 };
 

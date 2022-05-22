@@ -11,11 +11,12 @@ void printMenu()
 	cout
 		<< "\n1. Add number of vertex in tree."
 		<< "\n2. Add vertex."
-		<< "\n3. Search vertex."
-		<< "\n4. Inversely symmetrical tree output."
-		<< "\n5. Tree output in line."
-		<< "\n6. Delete a vertex."
-		<< "\n7. Exit."
+		<< "\n3. Add vertex recursive."
+		<< "\n4. Search vertex."
+		<< "\n5. Inversely symmetrical tree output."
+		<< "\n6. Tree output in line."
+		<< "\n7. Delete a vertex."
+		<< "\n8. Exit."
 		<< endl;
 }
 
@@ -38,15 +39,16 @@ void interface(Vertex*& pRoot)
 		cout << "   Choice: ";
 		switch (input())
 		{
-		case ShowMenu:   { printMenu(); break; }
-		case Create:     { caseCreate(pRoot); break; }
-		case Add:        { caseAdd(pRoot); break; }
-		case Search:     { caseSearch(pRoot); break; }
-		case ShowBack:   { caseShowBack(pRoot); break; }
-		case ShowInLine: { caseShowInLine(pRoot); break; }
-		case Delete:     { caseDelete(pRoot); break;}
-		case Exit:       { stop = true; break; }
-		default:         std::cout << "   There is no such menu item.\n\n"; break;
+		case ShowMenu:     { printMenu(); break; }
+		case Create:       { caseCreate(pRoot); break; }
+		case Add:          { caseAdd(pRoot); break; }
+		case AddRecursive: { caseAddRecursive(pRoot); break; }
+		case Search:       { caseSearch(pRoot); break; }
+		case ShowBack:     { caseShowBack(pRoot); break; }
+		case ShowInLine:   { caseShowInLine(pRoot); break; }
+		case Delete:       { caseDelete(pRoot); break;}
+		case Exit:         { stop = true; break; }
+		default:           std::cout << "   There is no such menu item.\n\n"; break;
 		}
 		cout << "   (0) - show menu.\n";
 	}
@@ -64,6 +66,13 @@ void caseAdd(Vertex*& pRoot)
 	Vertex* pCurrent;
 	cout << "   Enter data to add (number):";
 	addNonRecursive(pRoot, input());
+}
+
+void caseAddRecursive(Vertex*& pRoot)
+{
+	Vertex* pCurrent;
+	cout << "   Enter data to add (number):";
+	add(pRoot, input());
 }
 
 void caseSearch(Vertex* pRoot)
